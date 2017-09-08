@@ -13,7 +13,45 @@
 
 <li> Magnitude : 두 점사이를 이은 선
 <li> Velocity : 시간에 따른 위치의 변화
-<li> 
+
+### Active
+
+<li> gameobject.activeSelf : 자기자신이 활성화 상태인지
+<li> gameobject.activeInHierarchy: 부모오브젝트가 꺼져있는지
+<li> gameobject.setActivity(true/false) : 활성화/비활성화
+
+### Translate && Rotation
+
+```c#
+transform.Translate(new Vector3(0.0.1)*Time.deltaTime);
+```
+
+```c#
+transform.Rotate(Vector3.up,-turnSpeed * Time.deltaTime); //회전축 속
+```
+
+### LookAt
+
+```c#
+void Update()
+{
+    transform.LookAt(target); 
+}
+```
+
+### Destory
+
+Destroy(GameObject/ Component, Time)
+
+```c#
+ Destory(GetComponet<RigidBody>,3f);
+```
+
+### Axis
+<li> -1 1 사이의 부동값을 반환함.
+
+
+### Linear Interpolation
 
 ### FixedUpdate()
 
