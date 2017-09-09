@@ -60,7 +60,7 @@ public class EnemyHealth : MonoBehaviour
     {
         isDead = true;
 
-        capsuleCollider.isTrigger = true;
+        capsuleCollider.isTrigger = true; // 콜라이더 제거
 
         anim.SetTrigger ("Dead");
 
@@ -71,8 +71,9 @@ public class EnemyHealth : MonoBehaviour
 
     public void StartSinking ()
     {
-        GetComponent <UnityEngine.AI.NavMeshAgent> ().enabled = false;
-        GetComponent <Rigidbody> ().isKinematic = true;
+        //오브젝트는 setAct, 컴포넌트는 enabled
+        GetComponent <UnityEngine.AI.NavMeshAgent> ().enabled = false; //NavMeshAgent 끄기
+        GetComponent <Rigidbody> ().isKinematic = true; // 물리엔진 무쉬
         isSinking = true;
         //ScoreManager.score += scoreValue;
         Destroy (gameObject, 2f);
