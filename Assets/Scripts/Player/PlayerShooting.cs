@@ -8,7 +8,7 @@ public class PlayerShooting : MonoBehaviour
 
 
     float timer;
-    Ray shootRay;
+    Ray shootRay = new Ray();
     RaycastHit shootHit; // 맞춘걸 반환함 
     int shootableMask;
     ParticleSystem gunParticles;
@@ -34,7 +34,8 @@ public class PlayerShooting : MonoBehaviour
 
 		if(Input.GetButton ("Fire1") && timer >= timeBetweenBullets && Time.timeScale != 0)
         {
-            Shoot ();
+            Debug.Log("Fire");
+            Shoot();
         }
 
         if(timer >= timeBetweenBullets * effectsDisplayTime)
@@ -50,33 +51,37 @@ public class PlayerShooting : MonoBehaviour
         gunLight.enabled = false;  // 조명을 끔
     }
     /* */
-    void Shoot ()
+    void Shoot()
     {
+        
         timer = 0f;
 
         gunAudio.Play ();
         gunLight.enabled = true;
 
-        gunParticles.Stop (); // 기존 파티클 제거
-        gunParticles.Play (); // 새 파티클 재생
+        // gunParticles.Stop (); // 기존 파티클 제거
+        // gunParticles.Play (); // 새 파티클 재생
 
         gunLine.enabled = true;
         gunLine.SetPosition (0, transform.position); //0은 첫번째 점을 의미하고, transform.position은 위치를 말
         
         shootRay.origin = transform.position; //
         shootRay.direction = transform.forward;
-
+        
         if(Physics.Raycast (shootRay, out shootHit, range, shootableMask))
         {
             EnemyHealth enemyHealth = shootHit.collider.GetComponent <EnemyHealth> (); // 맞춘적의 스크립트를 가져
             if(enemyHealth != null)
             {
+                
                 enemyHealth.TakeDamage (damagePerShot, shootHit.point);
             }
+            Debug.Log("shoot");
             gunLine.SetPosition (1, shootHit.point);
         }
         else
         {
+            Debug.Log("Don't shoot");
             gunLine.SetPosition (1, shootRay.origin + shootRay.direction * range); //
         }
     }
